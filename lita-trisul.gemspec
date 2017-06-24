@@ -5,7 +5,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["info@unleashnetworks.com"]
   spec.description   = "Lita chatops to Trisul Network Analytics"
   spec.summary       = "Chatbot interface to network traffic and security monitoring"
-  spec.homepage      = "github.com"
+  spec.homepage      = "https://github.com/trisulnsm/lita-trisul"
   spec.license       = "MIT"
   spec.metadata      = { "lita_plugin_type" => "handler" }
 
