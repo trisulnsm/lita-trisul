@@ -1,6 +1,6 @@
 Lita.configure do |config|
   # The name your robot will use.
-  config.robot.name = "Wallee"
+  config.robot.name = "Krishna Kumar Natarajan"
 
   # The locale code for the language to use.
   # config.robot.locale = :en
@@ -35,14 +35,16 @@ Lita.configure do |config|
   ## documentation for options.
 
   # Sample HIPCHAT confirtaion
-  config.adapters.hipchat.jid = "[INSERT-XMPP-HIPCHAT-KEY]@chat.hipchat.com"
-  config.adapters.hipchat.password = "[INSERT-PASSWORD]"
+  ## Example: Set configuration for any loaded handlers. See the handler's
+  ## documentation for options.
+  config.adapters.hipchat.jid = "714831_5027795@chat.hipchat.com"
+  config.adapters.hipchat.password = "Krishna8"
   config.adapters.hipchat.debug = false
   config.adapters.hipchat.rooms = :all
-  config.http.port=9000
-  config.http.host="[INSERT-LITA-TRISUL-HOSTNAME-OR-IP]"
+  config.http.port=3000
+  config.http.host="172.31.8.85"
   config.robot.alias = "/"
-  config.robot.admins =  "[INSERT-XMPP-HIPCHAT-KEY]@chat.hipchat.com"
-
+  config.robot.admins = "714831_5027795@chat.hipchat.com"
+#
 
 end

@@ -46,3 +46,22 @@ Instructions for developers of lita-trisul
 # Install bundler and all the gems 
   # Ubuntu - `gem install bundler` then  `bundle install`
 
+
+# Configure your  BOT for HIPCHAT 
+  # Open : wallee /lita_conf and choose a nick 
+  # 
+  
+
+# Add builder,gerbilcharts and trisulrp gems to the Gemfile and run "bundle install" 
+  # gem "trisulrp"
+  # gem "gerbilcharts"
+  # gem "builder"
+
+
+# There seems to be a bug with gerbil charts
+  # To provide a temporary fix against the bug, copy the gerbil.js and brushmetal.css files to the directory to the directory from which the bot is started and then start the bot
+  # cp /var/lib/gems/2.3.0/gems/lita-trisul-0.2.0/lib/lita/handlers/gerbil.js .
+  # cp /var/lib/gems/2.3.0/gems/lita-trisul-0.2.0/lib/lita/handlers/brushmetal.js .
+
+
+
