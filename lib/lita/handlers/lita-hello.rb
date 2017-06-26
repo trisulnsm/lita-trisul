@@ -5,15 +5,18 @@ require 'base64'
 module Lita
   module Handlers
     class Hello < Handler
-     extend Lita::Handler::HTTPRouter
-     http.get "/kkr.png" do |request, response2|
+	$id=rand(100)
+        extend Lita::Handler::HTTPRouter
+        http.get "/kkr:id.png", :example
+        def example(request,response2) 
 	 `ruby /home/lita/test_lines.rb`
 	 `rsvg-convert /tmp/sq_linechart.svg -o /home/lita/robot/test.png`
 	 file=File.read("/home/lita/robot/test.png")
 	 response2["Content-Type"] = "image/png"
 	 response2.write(file)
 	 response2.finish
-      end
+         p "/kkr#{$id}.png"
+        end
 
       route(/^hey\s(.*)/, :index, command: false, help: { "index" => "To test trp" })
       route(/^hey$/, :index, command: false, help: { "index" => "To test trp" })
@@ -45,20 +48,15 @@ module Lita
 
 
       def imagery(response)
-          #http.get "/lena.jpg" do |request, response2|
-          #file=File.read("/home/lita/walle/lena.jpg")
-	  #response2["Content-Type"] = "image/jpg"
-	  #response2.write(file)
-	  #response2.finish
-	  #p "tttttttttttttteeeeeeeeeeeeeee"
-	#end
-        response.reply("http://139.59.66.54:9000/kkr.png")
+       response.reply("http://139.59.66.54:9000/kkr#{$id}.png")
+       $id=rand(100)
+
       end
      
      
      
       def hyper(response)
-	response.reply("http://cdn.wallpapersafari.com/45/68/I1JBin.jpg")
+	 response.reply("ihello")
       end
     
     
