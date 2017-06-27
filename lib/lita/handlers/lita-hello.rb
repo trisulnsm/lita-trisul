@@ -5,9 +5,15 @@ require 'base64'
 module Lita
   module Handlers
     class Hello < Handler
+
 	$id=rand(100)
         extend Lita::Handler::HTTPRouter
         http.get "/kkr:id.png", :example
+
+	config :query_endpoint
+	config :lita_public_ip
+
+
         def example(request,response2) 
 	 `ruby /home/lita/test_lines.rb`
 	 `rsvg-convert /tmp/sq_linechart.svg -o /home/lita/robot/test.png`
@@ -37,7 +43,7 @@ module Lita
         tint.from= TRP::Timestamp.new()
         tint.from.tv_sec = tint.to.tv_sec - 3600
         req = TrisulRP::Protocol.mk_request(TRP::Message::Command::COUNTER_GROUP_TOPPER_REQUEST,{:counter_group=>response.matches[0][0],:meter=>0,:maxitems=>2,time_interval:tint})
-        TrisulRP::Protocol.get_response_zmq(conn,req) do |resp|
+        TrisulRP::Protocol.get_response_zmq(config.query_endpoint,req) do |resp|
           resp.keys.each do |key|
             response.reply("#{key.label}=#{key.metric*300}")
           end
@@ -48,7 +54,7 @@ module Lita
 
 
       def imagery(response)
-       response.reply("http://139.59.66.54:9000/kkr#{$id}.png")
+       response.reply("http://#{config.lita_public_ip}:9000/kkr#{$id}.png")
        $id=rand(100)
 
       end
