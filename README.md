@@ -28,13 +28,13 @@ TODO: Describe the plugin's features and how to use them.
 Instructions for developers of lita-trisul
 
 1. Fork and then
-  1.  Ubuntu -  `git clone https://github.com/trisulnsm/lita-trisul.git`
+    - Ubuntu -  `git clone https://github.com/trisulnsm/lita-trisul.git`
 2. Install ruby  
-  1. Ubuntu -  `sudo apt-get install ruby ruby-dev`
+    - Ubuntu -  `sudo apt-get install ruby ruby-dev`
 3. Install Ruby binding for ZMQ - we use this to connect to Trisul domain 
   1. Ubuntu - `sudo apt-get install ruby-ffi-rzmq`
 4. Install other dependencies  
-  1. Ubuntu - `sudo apt-get install build-essential libssl-dev redis-server`
+  1. Ubuntu - `sudo apt-get install build-essential libssl-dev redis-server librsvg2-bin`
 5. Install bundler and all the gems 
   1. Ubuntu - `gem install bundler` then  `bundle install`
 
