@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = "lita-trisul"
-  spec.version       = "0.2.2"
+  spec.version       = "0.2.3"
   spec.authors       = ["Krishna"]
   spec.email         = ["info@unleashnetworks.com"]
   spec.description   = "Lita chatops to Trisul Network Analytics"
@@ -15,6 +15,12 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "lita", ">= 4.7"
+  spec.add_runtime_dependency "trisulrp"
+  spec.add_runtime_dependency "ffi-rzmq"
+  spec.add_runtime_dependency "builder"
+  spec.add_runtime_dependency "gerbilcharts"
+
+#Uncomment to use the IRC adapter
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "pry-byebug"
