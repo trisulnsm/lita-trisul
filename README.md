@@ -27,29 +27,20 @@ TODO: Describe the plugin's features and how to use them.
 
 Instructions for developers of lita-trisul
 
-# Fork and then
-  # Ubuntu -  `git clone https://github.com/trisulnsm/lita-trisul.git`
+1. Fork and then
+  1.  Ubuntu -  `git clone https://github.com/trisulnsm/lita-trisul.git`
+2. Install ruby  
+  1. Ubuntu -  `sudo apt-get install ruby ruby-dev`
+3. Install Ruby binding for ZMQ - we use this to connect to Trisul domain 
+  1. Ubuntu - `sudo apt-get install ruby-ffi-rzmq`
+4. Install other dependencies  
+  1. Ubuntu - `sudo apt-get install build-essential libssl-dev redis-server`
+5. Install bundler and all the gems 
+  1. Ubuntu - `gem install bundler` then  `bundle install`
 
 
-# Install ruby  
-  # Ubuntu -  `sudo apt-get install ruby ruby-dev`
-
-
-# Install Ruby binding for ZMQ - we use this to connect to Trisul domain 
-  # Ubuntu - `sudo apt-get install ruby-ffi-rzmq`
-
-
-# Install other dependencies  
-  # Ubuntu - `sudo apt-get install build-essential libssl-dev redis-server`
-
-
-# Install bundler and all the gems 
-  # Ubuntu - `gem install bundler` then  `bundle install`
-
-
-# Configure your  BOT for HIPCHAT 
-  # Open : wallee /lita_conf and choose a nick 
-  # 
+1 Configure your  BOT for HIPCHAT 
+  1. Open : wallee /lita_conf and choose a nick 
   
 
 # Add builder,gerbilcharts and trisulrp gems to the Gemfile and run "bundle install" 

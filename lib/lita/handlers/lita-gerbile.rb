@@ -6,6 +6,8 @@ require 'gerbilcharts'
 module Lita
   module Handlers
     class Gerbile < Handler
+        config :config.trisul.host, type: String, required: true
+        config :config.trisul.port, type: Integer, required: true
         $id=rand(100)
         extend Lita::Handler::HTTPRouter
         http.get "/kkr:id.png", :example
