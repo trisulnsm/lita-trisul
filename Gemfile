@@ -9,7 +9,6 @@ gem "trisulrp"
 gem "ffi-rzmq"
 
 # Uncomment to use the HipChat adapter
-gem "lita-hipchat"
 gem "builder"
 gem "gerbilcharts"
 
