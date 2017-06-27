@@ -4,6 +4,9 @@
 [![Coverage Status](https://coveralls.io/repos/kkn1806/lita-trisul/badge.png)](https://coveralls.io/r/kkn1806/lita-trisul)
 
 
+
+Lita-Trisul is a chat bot for Trisul Network Analytics
+
 ## Installation
 
 Add lita-trisul to your Lita instance's Gemfile:
@@ -22,10 +25,11 @@ TODO: Describe the plugin's features and how to use them.
 
 
 
-## For developers
+
+## Additional instructions 
 
 
-Instructions for developers of lita-trisul
+### Base install 
 
 1. Fork and then
     - Ubuntu -  `git clone https://github.com/trisulnsm/lita-trisul.git`
@@ -36,17 +40,19 @@ Instructions for developers of lita-trisul
 4. Install other dependencies  
   1. Ubuntu - `sudo apt-get install build-essential libssl-dev redis-server librsvg2-bin`
 5. Install bundler and all the gems 
-  1. Ubuntu - `gem install bundler` then  `bundle install`
+    - Ubuntu - `sudo gem install bundler` then  `bundle install`
 
 
-1 Configure your  BOT for HIPCHAT 
-  1. Open : wallee /lita_conf and choose a nick 
+
+### Creating your Chat bot 
+
+
+
+1. Create a new LITA instance 
+    - `lita new mybotwalle` 
+1. Configure your  BOT for HIPCHAT
+    - Open : walle/lita_conf and choose a nick 
   
-
-# Add builder,gerbilcharts and trisulrp gems to the Gemfile and run "bundle install" 
-  # gem "trisulrp"
-  # gem "gerbilcharts"
-  # gem "builder"
 
 
 # There seems to be a bug with gerbil charts
