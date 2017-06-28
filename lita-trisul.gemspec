@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = "lita-trisul"
-  spec.version       = "0.2.3"
+  spec.version       = "0.2.4"
   spec.authors       = ["Krishna"]
   spec.email         = ["info@unleashnetworks.com"]
   spec.description   = "Lita chatops to Trisul Network Analytics"
@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "lita", ">= 4.7"
   spec.add_runtime_dependency "trisulrp"
-#  spec.add_runtime_dependency "ffi-rzmq"
+  spec.add_runtime_dependency "ffi-rzmq"
   spec.add_runtime_dependency "builder"
   spec.add_runtime_dependency "gerbilcharts"
 
