@@ -36,9 +36,9 @@ TODO: Describe the plugin's features and how to use them.
 2. Install ruby  
     - Ubuntu -  `sudo apt-get install ruby ruby-dev`
 3. Install Ruby binding for ZMQ - we use this to connect to Trisul domain 
-  1. Ubuntu - `sudo apt-get install ruby-ffi-rzmq`
+    - Ubuntu - `sudo apt-get install ruby-ffi-rzmq`
 4. Install other dependencies  
-  1. Ubuntu - `sudo apt-get install build-essential libssl-dev redis-server librsvg2-bin`
+    - Ubuntu - `sudo apt-get install build-essential libssl-dev redis-server librsvg2-bin`
 5. Install bundler and all the gems 
     - Ubuntu - `sudo gem install bundler` then  `bundle install`
 
@@ -55,10 +55,10 @@ TODO: Describe the plugin's features and how to use them.
   
 
 
-# There seems to be a bug with gerbil charts
-  # To provide a temporary fix against the bug, copy the gerbil.js and brushmetal.css files to the directory to the directory from which the bot is started and then start the bot
-  # cp /var/lib/gems/2.3.0/gems/lita-trisul-0.2.0/lib/lita/handlers/gerbil.js .
-  # cp /var/lib/gems/2.3.0/gems/lita-trisul-0.2.0/lib/lita/handlers/brushmetal.js .
+### There seems to be a bug with gerbil charts
+1. To provide a temporary fix against the bug, copy the gerbil.js and brushmetal.css files to the directory to the directory from which the bot is started and then start the bot
+    - cp /var/lib/gems/2.3.0/gems/lita-trisul-0.2.0/lib/lita/handlers/gerbil.js .
+    - cp /var/lib/gems/2.3.0/gems/lita-trisul-0.2.0/lib/lita/handlers/brushmetal.js .
 
 
 
