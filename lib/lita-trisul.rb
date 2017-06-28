@@ -10,4 +10,3 @@ Lita::Handlers::Trisul.template_root File.expand_path(
   File.join("..", "..", "templates"),
  __FILE__
 )
-require "lita/handlers/lita-hello"

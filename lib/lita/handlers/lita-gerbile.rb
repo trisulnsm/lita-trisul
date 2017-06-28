@@ -50,7 +50,7 @@ module Lita
         end
 
     end#CLASS
-    Lita.register_handler(Gerbile)
+    # Lita.register_handler(Gerbile)
   end#module handlers
 end#modulelita
                     

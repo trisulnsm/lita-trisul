@@ -3,6 +3,7 @@ require 'lita'
 require 'open-uri'
 require 'base64'
 require 'gerbilcharts'
+require 'trisulrp'
 
 module Lita
   module Handlers
@@ -15,6 +16,21 @@ module Lita
         config  :local_http_server
 
         http.get "/ers:id.png", :example
+
+        route(/^Total\straffic\s(.*)/i, :trpchart, command: false, help: { "trpchart" => "To chart trp" })  
+        route(/^nextnumber/i, :nextnumber, command: false, help: { "nextnumber" => "To chart trp" })  
+
+
+	def nextnumber(response)
+
+		nn = redis.get("nextnum")  || 0 
+
+		response.reply("hello #{nn}")
+
+		redis.set("nextnum","#{nn.to_i+1}")
+
+	end
+
 
         def example(request,response2)
          `rsvg-convert /tmp/chart.svg -o /tmp/chart.png`
@@ -37,8 +53,6 @@ module Lita
         end
 
 
-        route(/^Total\straffic\s(.*)/i, :trpchart, command: false, help: { "trpchart" => "To chart trp" })  
-
 
         def trpchart(response)
          if response.matches[0]=="hey" and ! response.matches[0].is_a?Array
@@ -51,19 +65,20 @@ module Lita
          keyt = TRP::KeyT.new({:key=>"TOTALBW"})
          req = TrisulRP::Protocol.mk_request(TRP::Message::Command::COUNTER_ITEM_REQUEST,{:counter_group=>response.matches[0][0].strip,:key=>keyt,time_interval:tint})
          data = []
-         TrisulRP::Protocol.get_response_zmq(config.trisul.trp_server_endpoint,req) do |resp|
+         TrisulRP::Protocol.get_response_zmq(config.trp_server_endpoint,req) do |resp|
           resp.stats.each do |stat|
             data << [ stat.ts_tv_sec,stat.values[0]*8]
           end#stats
          end#trp
          chart_generate(data)
-         response.reply("http://#{config.trisul.local_http_server}/ers#{$id}.png")
+         response.reply("#{config.local_http_server}/ers#{$id}.png")
          $id=rand(100)
         end#def
 
-      Lita.register_handler(self)
 
     end #CLASS
+
+    Lita.register_handler(Trisul)
   end #module handlers
 end #modulelita
                     

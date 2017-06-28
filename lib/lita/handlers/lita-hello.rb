@@ -68,6 +68,6 @@ module Lita
     
     
     end#CLASS
-    Lita.register_handler(Hello)
+#    Lita.register_handler(Hello)
   end#module handlers
 end#modulelita
