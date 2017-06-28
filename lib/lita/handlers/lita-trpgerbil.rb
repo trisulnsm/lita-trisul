@@ -3,9 +3,10 @@ require 'lita'
 require 'open-uri'
 require 'base64'
 require 'gerbilcharts'
+
 module Lita
   module Handlers
-    class Gerbile < Handler
+    class Trisul < Handler
         $id=rand(100)
         extend Lita::Handler::HTTPRouter
         http.get "/ers:id.png", :example
@@ -62,8 +63,8 @@ module Lita
          $id=rand(100)
         end#def
 
-    end#CLASS
-    Lita.register_handler(Gerbile)
-  end#module handlers
-end#modulelita
+      Lita.register_handler(self)
+    end #CLASS
+  end #module handlers
+end #modulelita
                     
