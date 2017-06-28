@@ -38,7 +38,7 @@ TODO: Describe the plugin's features and how to use them.
 3. Install Ruby binding for ZMQ - we use this to connect to Trisul domain 
     - Ubuntu - `sudo apt-get install ruby-ffi-rzmq`
 4. Install other dependencies  
-    - Ubuntu - `sudo apt-get install build-essential libssl-dev redis-server librsvg2-bin`
+    - Ubuntu - `sudo apt-get install build-essential libssl-dev redis-server librsvg2-bin libzmq3-dev`
 5. Install bundler and all the gems 
     - Ubuntu - `sudo gem install bundler` then  `bundle install`
 
