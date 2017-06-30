@@ -64,5 +64,5 @@ TODO: Describe the plugin's features and how to use them.
 1. Configure your  BOT for HIPCHAT
     - Move to the LITA instance directory 'cd mybotwalle/'
     - Open : lita_config.rb and configure parameters to the chat platform. 
-1. Copy brushmetal.css into LITA instance directory
+1. Copy brushmetal.css into LITA instance directory for gerbil charts to work
     - cp /var/lib/gems/2.3.0/gems/lita-trisul-0.2.5/lib/lita/handlers/trisul.rb   .
