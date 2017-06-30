@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = "lita-trisul"
-  spec.version       = "0.2.6"
+  spec.version       = "0.2.8"
   spec.authors       = ["Krishna"]
   spec.email         = ["info@unleashnetworks.com"]
   spec.description   = "Lita chatops to Trisul Network Analytics"

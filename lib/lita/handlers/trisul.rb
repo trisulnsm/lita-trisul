@@ -7,28 +7,31 @@ module Lita
   module Handlers
     class Trisul < Handler
 
-        $id=rand(100)
+        $id=rand(100)					###Global variable to randomly allocate http routes
         extend Lita::Handler::HTTPRouter
 
-        config  :trp_server_endpoint
-        config  :local_http_server
+        config  :trp_server_endpoint			###Trisul Remote protocol endpoint along with port number to query for data
+        config  :local_http_server			###Local HTTP Server address with port number to display query responses
 
-        http.get "/trpchart:id.png", :example
+        http.get "/trpchart:id.png", :example		###Creation of HTTP Routes to respond with charts
 
         def example(request,response2)
-         `rsvg-convert /tmp/chart.svg -o /tmp/chart.png`
+         `rsvg-convert /tmp/chart.svg -o /tmp/chart.png`### Conversion of charts from .svg format provided by GerbilCharts to .png format
          file=File.read("/tmp/chart.png")
          response2["Content-Type"] = "image/png"
          response2.write(file)
          response2.finish
         end
 
+		###########		CREATION OF CHAT ROUTES TO RESPOND TO THE USER QUERIES AT THE FRONT END		###########
+
+
 
         route(/^Total\straffic(\s(.*))?(\sfor\s(.*))?/i, :trpchart, command: false, help: { "trpchart" => "To chart trp" })  
 	route(/^Set Counter group\s(.*)\sfor\s(.*)/i, :setcg, command: false, help: { "setcg" => "To set cg in redis" })
 
 
-
+		###########		FUNCTION DEFINITIONS TO FETCH FROM THE BACKEND AND DISPLAY THE RESPONSE		###########
 
 
 	def setcg(response)
@@ -39,9 +42,10 @@ module Lita
 
         def trpchart(response)
          if response.matches[0]=="hey" and ! response.matches[0].is_a?Array
-          response.reply("Please enter hey <counter_group_id>")
+          response.reply("Please enter hey <counter_group_id>")				###Check query syntax of the user
          end
-         tint = TRP::TimeInterval.new()
+
+         tint = TRP::TimeInterval.new()							###Create the time interval to query from
          if(response.matches[0][1]["last hour"]||response.matches[0][0]["last hour"])
 		 tint.to =  TRP::Timestamp.new({:tv_sec=>Time.now.tv_sec})
         	 tint.from = TRP::Timestamp.new()
@@ -56,25 +60,34 @@ module Lita
 		tint.from = TRP::Timestamp.new({:tv_sec=>Time.parse(Date.today.to_s).tv_sec})
 		p "till now"
 	 end
-         keyt = TRP::KeyT.new({:key=>"TOTALBW"})
-         if(!response.matches[0][0]||response.matches[0][0].start_with?("{"))
+
+
+         keyt = TRP::KeyT.new({:key=>"TOTALBW"})					###Set the counter group ID
+
+
+         if(!response.matches[0][0]||response.matches[0][0].start_with?("{"))		###Check if the GID is given or has to be fetched
 	   req = TrisulRP::Protocol.mk_request(TRP::Message::Command::COUNTER_ITEM_REQUEST,{:counter_group=>response.matches[0][0].strip,:key=>keyt,time_interval:tint})
 	 else
  	   req = TrisulRP::Protocol.mk_request(TRP::Message::Command::COUNTER_ITEM_REQUEST,{:counter_group=>Lita.redis.get('/litatrisul/countergroup'),:key=>keyt,time_interval:tint})
 	 end
-         data = []
+
+
+         data = []									###Create an array to pass data to charting func.
+	 total_bytes=0									###Create variable to count stats
          TrisulRP::Protocol.get_response_zmq(config.trp_server_endpoint,req) do |resp|
           resp.stats.each do |stat|
             data << [ stat.ts_tv_sec,stat.values[0]*8]
+	    total_bytes += stat.values[0]
           end#stats
          end#trp
-         chart_generate(data)
-         response.reply("#{config.local_http_server}/trpchart#{$id}.png")
-         $id=rand(100)
+         chart_generate(data)								###Call the chart generation function and pass the data
+         response.reply("#{config.local_http_server}/trpchart#{$id}.png")		###Respond with the http route created for the response image
+	 response.reply("TOTAL BANDWIDTH : #{total_bytes} bytes")
+         $id=rand(100)									###Randomise global variable for the next query, if any
         end#def
 
 
-        def chart_generate(data)
+        def chart_generate(data)							###GerbilCharts Charting function
          mod1 = GerbilCharts::Models::TimeSeriesGraphModel.new("External Gateway")
          mod1.add_tuples data
          modgroup = GerbilCharts::Models::GraphModelGroup.new("Hosts")
