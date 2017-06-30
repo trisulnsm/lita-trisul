@@ -50,27 +50,26 @@ module Lita
 		 tint.to =  TRP::Timestamp.new({:tv_sec=>Time.now.tv_sec})
         	 tint.from = TRP::Timestamp.new()
         	 tint.from.tv_sec = tint.to.tv_sec - 3600
-		 p "last hour"
 	 elsif(response.matches[0][1]["yesterday"]||response.matches[0][0]["yesterday"])
 		tint.to = TRP::Timestamp.new({:tv_sec=>Time.parse(Date.today.to_s).tv_sec})
 		tint.from = TRP::Timestamp.new({:tv_sec=>Time.parse(Date.today.to_s).tv_sec-86400})
-		p "yest"
 	 else
 		tint.to = TRP::Timestamp.new({:tv_sec=>Time.now.tv_sec})
 		tint.from = TRP::Timestamp.new({:tv_sec=>Time.parse(Date.today.to_s).tv_sec})
-		p "till now"
 	 end
 
 
          keyt = TRP::KeyT.new({:key=>"TOTALBW"})					###Set the counter group ID
 
-
+         guid =""
          if(!response.matches[0][0]||response.matches[0][0].start_with?("{"))		###Check if the GID is given or has to be fetched
-	   req = TrisulRP::Protocol.mk_request(TRP::Message::Command::COUNTER_ITEM_REQUEST,{:counter_group=>response.matches[0][0].strip,:key=>keyt,time_interval:tint})
-	 else
- 	   req = TrisulRP::Protocol.mk_request(TRP::Message::Command::COUNTER_ITEM_REQUEST,{:counter_group=>Lita.redis.get('/litatrisul/countergroup'),:key=>keyt,time_interval:tint})
-	 end
-
+          guid = response.matches[0][0]
+         else
+          guid = Lita.redis.get('/litatrisul/countergroup') 
+         end
+ 
+	 req = TrisulRP::Protocol.mk_request(TRP::Message::Command::COUNTER_ITEM_REQUEST,{:counter_group=>guid,:key=>keyt,time_interval:tint})
+	 
 
          data = []									###Create an array to pass data to charting func.
 	 total_bytes=0									###Create variable to count stats
