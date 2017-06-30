@@ -62,8 +62,7 @@ TODO: Describe the plugin's features and how to use them.
 1. Create a new LITA instance 
     - `lita new mybotwalle` 
 1. Configure your  BOT for HIPCHAT
-    - Open : mybotwalle/lita_config.rb and configure parameters to the chat platform. 
+    - Move to the LITA instance directory 'cd mybotwalle/'
+    - Open : lita_config.rb and configure parameters to the chat platform. 
 1. Copy brushmetal.css into LITA instance directory
-    - cp /var/lib/gems/2.3.0/gems/lita-trisul-0.2.4/lib/lita/handlers/trisul.rb /lita-trisul/mybotwalle/
-1. Require 'trisulrp' in your /var/lib/gems/2.3.0/gems/lita-trisul-0.2.4/lib/lita-trisul.rb file
-    - require 'trisulrp'
+    - cp /var/lib/gems/2.3.0/gems/lita-trisul-0.2.5/lib/lita/handlers/trisul.rb   .
