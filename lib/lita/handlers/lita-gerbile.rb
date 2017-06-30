@@ -6,19 +6,18 @@ require 'gerbilcharts'
 module Lita
   module Handlers
     class Gerbile < Handler
-        config :config.trisul.host, type: String, required: true
-        config :config.trisul.port, type: Integer, required: true
-        $id=rand(100)
+        config :trp_server_endpoint
+	config :local_http_server   
+	$id=rand(100)
         extend Lita::Handler::HTTPRouter
-        http.get "/kkr:id.png", :example
+        http.get "/chart:id.png", :example
         def example(request,response)
          chart_generate()
-         `rsvg-convert /tmp/sq_linechart.svg -o /home/lita/robot/test.png`
-         file=File.read("/home/lita/robot/test.png")
+         `rsvg-convert /tmp/sq_linechart.svg -o /tmp/test.png`
+         file=File.read("/tmp/test.png")
          response2["Content-Type"] = "image/png"
          response2.write(file)
          response2.finish
-         p "/kkr#{$id}.png"
         end
 
 
@@ -45,7 +44,7 @@ module Lita
 
 
         def charts(response)
-         response.reply("http://139.59.66.54:9000/kkr#{$id}.png")
+		response.reply("#{config.local_http_server}/chart#{$id}.png")
          $id=rand(100)
         end
 

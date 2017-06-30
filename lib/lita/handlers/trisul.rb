@@ -15,30 +15,27 @@ module Lita
         config  :trp_server_endpoint
         config  :local_http_server
 
-        http.get "/ers:id.png", :example
-
-        route(/^Total\straffic\s(.*)/i, :trpchart, command: false, help: { "trpchart" => "To chart trp" })  
-        route(/^nextnumber/i, :nextnumber, command: false, help: { "nextnumber" => "To chart trp" })  
-
-
-	def nextnumber(response)
-
-		nn = redis.get("nextnum")  || 0 
-
-		response.reply("hello #{nn}")
-
-		redis.set("nextnum","#{nn.to_i+1}")
-
-	end
-
-
-        def example(request,response2)
+        http.get "/trpquery:id.png", :example
+        
+	def example(request,response2)
          `rsvg-convert /tmp/chart.svg -o /tmp/chart.png`
          file=File.read("/tmp/chart.png")
          response2["Content-Type"] = "image/png"
          response2.write(file)
          response2.finish
         end
+
+
+        route(/^Total\straffic\s(.*)/i, :trpchart, command: false, help: { "trpchart" => "To chart trp" })  
+        route(/^nextnumber/i, :nextnumber, command: false, help: { "nextnumber" => "Incrementer" })  
+
+
+	def nextnumber(response)
+		nn = redis.get("nextnum")  || 0 
+		response.reply("hello #{nn}")
+		redis.set("nextnum","#{nn.to_i+1}")
+	end
+
 
 
         def chart_generate(data)
@@ -71,7 +68,7 @@ module Lita
           end#stats
          end#trp
          chart_generate(data)
-         response.reply("#{config.local_http_server}/ers#{$id}.png")
+         response.reply("#{config.local_http_server}/trpquery#{$id}.png")
          $id=rand(100)
         end#def
 
