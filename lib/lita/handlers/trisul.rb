@@ -3,8 +3,6 @@ require 'lita'
 require 'open-uri'
 require 'base64'
 require 'gerbilcharts'
-require 'trisulrp'
-
 module Lita
   module Handlers
     class Trisul < Handler
@@ -15,27 +13,15 @@ module Lita
         config  :trp_server_endpoint
         config  :local_http_server
 
-        http.get "/trpquery:id.png", :example
-        
-	def example(request,response2)
+        http.get "/trpchart:id.png", :example
+
+        def example(request,response2)
          `rsvg-convert /tmp/chart.svg -o /tmp/chart.png`
          file=File.read("/tmp/chart.png")
          response2["Content-Type"] = "image/png"
          response2.write(file)
          response2.finish
         end
-
-
-        route(/^Total\straffic\s(.*)/i, :trpchart, command: false, help: { "trpchart" => "To chart trp" })  
-        route(/^nextnumber/i, :nextnumber, command: false, help: { "nextnumber" => "Incrementer" })  
-
-
-	def nextnumber(response)
-		nn = redis.get("nextnum")  || 0 
-		response.reply("hello #{nn}")
-		redis.set("nextnum","#{nn.to_i+1}")
-	end
-
 
 
         def chart_generate(data)
@@ -50,7 +36,12 @@ module Lita
         end
 
 
-
+        route(/^Total\straffic(.*)/i, :trpchart, command: false, help: { "trpchart" => "To chart trp" })  
+	route(/^Set Counter group\s(.*)/i, :setcg, command: false, help: { "setcg" => "To set cg in redis" })
+	def func(response)
+          Lita.redis.set('/litatrisul/countergroup',response.matches[0][0])
+          response.reply("Value set")
+        end
         def trpchart(response)
          if response.matches[0]=="hey" and ! response.matches[0].is_a?Array
           response.reply("Please enter hey <counter_group_id>")
@@ -60,7 +51,11 @@ module Lita
          tint.from= TRP::Timestamp.new()
          tint.from.tv_sec = tint.to.tv_sec - 3600
          keyt = TRP::KeyT.new({:key=>"TOTALBW"})
-         req = TrisulRP::Protocol.mk_request(TRP::Message::Command::COUNTER_ITEM_REQUEST,{:counter_group=>response.matches[0][0].strip,:key=>keyt,time_interval:tint})
+         if(!response.matches[0][0])
+	   req = TrisulRP::Protocol.mk_request(TRP::Message::Command::COUNTER_ITEM_REQUEST,{:counter_group=>response.matches[0][0].strip,:key=>keyt,time_interval:tint})
+	 else
+ 	   req = TrisulRP::Protocol.mk_request(TRP::Message::Command::COUNTER_ITEM_REQUEST,{:counter_group=>Lita.redis.get('/litatrisul/countergroup'),:key=>keyt,time_interval:tint})
+	 end
          data = []
          TrisulRP::Protocol.get_response_zmq(config.trp_server_endpoint,req) do |resp|
           resp.stats.each do |stat|
@@ -68,14 +63,13 @@ module Lita
           end#stats
          end#trp
          chart_generate(data)
-         response.reply("#{config.local_http_server}/trpquery#{$id}.png")
+         response.reply("#{config.local_http_server}/trpchart#{$id}.png")
          $id=rand(100)
         end#def
 
+      Lita.register_handler(self)
 
     end #CLASS
-
-    Lita.register_handler(Trisul)
   end #module handlers
 end #modulelita
                     
